@@ -15,31 +15,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.euroaluAPI.models.Category;
-import com.euroaluAPI.services.CategoryService;
+import com.euroaluAPI.models.SubCategory;
+import com.euroaluAPI.services.SubCategoryService;
 
 
 @RestController
-@RequestMapping("api/admin/categories")
-public class CategoryManagement{
+@RequestMapping("api/admin/sub-categories")
+public class SubCategoryManagement{
 
     @Autowired
-    private CategoryService categoryService;
+    private SubCategoryService subCategoryService;
  
 
     @GetMapping
-    public ResponseEntity<List<Category>> getAllCategories() {
-        List<Category> categorys = categoryService.getAllCategories();
-        return new ResponseEntity<>(categorys, HttpStatus.OK);
+    public ResponseEntity<List<SubCategory>> getAllCategories() {
+        List<SubCategory> subCategorys = subCategoryService.getAllCategories();
+        return new ResponseEntity<>(subCategorys, HttpStatus.OK);
     }
 
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCategoryById(@PathVariable("id") Long id) {
+    public ResponseEntity<?> getSubCategoryById(@PathVariable("id") Long id) {
         try {
-            Category category = categoryService.getCategoryById(id);
-            return ResponseEntity.ok(category);
+            SubCategory subCategory = subCategoryService.getSubCategoryById(id);
+            return ResponseEntity.ok(subCategory);
         } catch (NoSuchElementException e) {
 //            ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), 404);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(e.getMessage());
@@ -50,22 +50,22 @@ public class CategoryManagement{
     }
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) throws Exception {
-        Category createdCategory = categoryService.createCategory(category);
-        return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
+    public ResponseEntity<SubCategory> createSubCategory(@RequestBody SubCategory subCategory) throws Exception {
+        SubCategory createdSubCategory = subCategoryService.createSubCategory(subCategory);
+        return new ResponseEntity<>(createdSubCategory, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCategory(@PathVariable("id") Long id, @RequestBody Category category) {
+    public ResponseEntity<?> updateSubCategory(@PathVariable("id") Long id, @RequestBody SubCategory subCategory) {
         try {
-        	System.out.println("updateCategory: " + category);
-        	Category existingCategory = categoryService.getCategoryById(id);
-//        	if(existingCategory.getUrlCategory() != null && category.getUrlCategory() != null && existingCategory.getUrlCategory() == (category.getUrlCategory())) {
+        	System.out.println("updateSubCategory: " + subCategory);
+        	SubCategory existingSubCategory = subCategoryService.getSubCategoryById(id);
+//        	if(existingSubCategory.getUrlSubCategory() != null && subCategory.getUrlSubCategory() != null && existingSubCategory.getUrlSubCategory() == (subCategory.getUrlSubCategory())) {
         	
-        	category.setId(id);
-        	System.out.println("existingCategory: " + existingCategory);
-            Category updatedCategory = categoryService.updateCategory(category);
-            return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
+        	subCategory.setId(id);
+        	System.out.println("existingSubCategory: " + existingSubCategory);
+            SubCategory updatedSubCategory = subCategoryService.updateSubCategory(subCategory);
+            return new ResponseEntity<>(updatedSubCategory, HttpStatus.OK);
         } catch (NoSuchElementException e) {
 //            ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), 404);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -80,12 +80,12 @@ public class CategoryManagement{
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable("id") Long id) {
-        Category existingCategory = categoryService.getCategoryById(id);
-        if (existingCategory == null) {
+    public ResponseEntity<Void> deleteSubCategory(@PathVariable("id") Long id) {
+        SubCategory existingSubCategory = subCategoryService.getSubCategoryById(id);
+        if (existingSubCategory == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        categoryService.deleteCategory(id);
+        subCategoryService.deleteSubCategory(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

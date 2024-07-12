@@ -15,31 +15,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.euroaluAPI.models.Category;
-import com.euroaluAPI.services.CategoryService;
+import com.euroaluAPI.models.Product;
+import com.euroaluAPI.services.ProductService;
 
 
 @RestController
-@RequestMapping("api/admin/categories")
-public class CategoryManagement{
+@RequestMapping("api/admin/products")
+public class ProductManagement{
 
     @Autowired
-    private CategoryService categoryService;
+    private ProductService productService;
  
 
     @GetMapping
-    public ResponseEntity<List<Category>> getAllCategories() {
-        List<Category> categorys = categoryService.getAllCategories();
-        return new ResponseEntity<>(categorys, HttpStatus.OK);
+    public ResponseEntity<List<Product>> getAllCategories() {
+        List<Product> products = productService.getAllCategories();
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCategoryById(@PathVariable("id") Long id) {
+    public ResponseEntity<?> getProductById(@PathVariable("id") Long id) {
         try {
-            Category category = categoryService.getCategoryById(id);
-            return ResponseEntity.ok(category);
+            Product product = productService.getProductById(id);
+            return ResponseEntity.ok(product);
         } catch (NoSuchElementException e) {
 //            ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), 404);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(e.getMessage());
@@ -50,22 +50,22 @@ public class CategoryManagement{
     }
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) throws Exception {
-        Category createdCategory = categoryService.createCategory(category);
-        return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
+    public ResponseEntity<Product> createProduct(@RequestBody Product product) throws Exception {
+        Product createdProduct = productService.createProduct(product);
+        return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCategory(@PathVariable("id") Long id, @RequestBody Category category) {
+    public ResponseEntity<?> updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
         try {
-        	System.out.println("updateCategory: " + category);
-        	Category existingCategory = categoryService.getCategoryById(id);
-//        	if(existingCategory.getUrlCategory() != null && category.getUrlCategory() != null && existingCategory.getUrlCategory() == (category.getUrlCategory())) {
+        	System.out.println("updateProduct: " + product);
+        	Product existingProduct = productService.getProductById(id);
+//        	if(existingProduct.getUrlProduct() != null && product.getUrlProduct() != null && existingProduct.getUrlProduct() == (product.getUrlProduct())) {
         	
-        	category.setId(id);
-        	System.out.println("existingCategory: " + existingCategory);
-            Category updatedCategory = categoryService.updateCategory(category);
-            return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
+        	product.setId(id);
+        	System.out.println("existingProduct: " + existingProduct);
+            Product updatedProduct = productService.updateProduct(product);
+            return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
         } catch (NoSuchElementException e) {
 //            ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), 404);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -80,12 +80,12 @@ public class CategoryManagement{
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable("id") Long id) {
-        Category existingCategory = categoryService.getCategoryById(id);
-        if (existingCategory == null) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable("id") Long id) {
+        Product existingProduct = productService.getProductById(id);
+        if (existingProduct == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        categoryService.deleteCategory(id);
+        productService.deleteProduct(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
