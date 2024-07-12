@@ -10,7 +10,9 @@ import com.euroaluAPI.models.Account;
 
 
 @Repository
-public interface AccountRepository extends JpaRepository<Account, Integer>, JpaSpecificationExecutor<Account> {
+public interface AccountRepository extends JpaRepository<Account, Long>
+//JpaSpecificationExecutor<Account> 
+{
 	Optional<Account> findByUsername(String username);
 
 	  Boolean existsByUsername(String username);

@@ -10,9 +10,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,26 +26,32 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler", "fieldHandler" })
 public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    private String description;
-    private String category;
-    private double price;
-    private String image;
-    @CreationTimestamp
-	  @Column(name = "create_time", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable = false, nullable = false)
-	  private Timestamp createTime;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private String name;
+	private String description;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "categoy_id")
+	private Category category;	
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "sub_categoy_id", nullable = true)
+	private SubCategory subCategory;
+	private double price;
+	private String image;
+	@CreationTimestamp
+	@Column(name = "create_time", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable = false, nullable = false)
+	private Timestamp createTime;
 
-	  @UpdateTimestamp
-	  @Column(name = "update_time", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP", updatable = true, nullable = false)
-	  private Timestamp updateTime;
-	  
-	  @Column(columnDefinition = "tinyInt(1)")
-	  private boolean status;
-	  
-    // Getters, setters, constructors
+	@UpdateTimestamp
+	@Column(name = "update_time", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP", updatable = true, nullable = false)
+	private Timestamp updateTime;
+
+	@Column(columnDefinition = "tinyInt(1)")
+	private boolean status;
+
+	// Getters, setters, constructors
 }
