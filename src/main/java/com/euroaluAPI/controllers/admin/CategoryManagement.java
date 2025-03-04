@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.euroaluAPI.models.Category;
+import com.euroaluAPI.response.ApiResponse;
 import com.euroaluAPI.services.CategoryService;
 
 
@@ -25,16 +26,10 @@ public class CategoryManagement{
 
     @Autowired
     private CategoryService categoryService;
- 
-
     @GetMapping
-    public ResponseEntity<List<Category>> getAllCategories() {
-        List<Category> categorys = categoryService.getAllCategories();
-        return new ResponseEntity<>(categorys, HttpStatus.OK);
+    public ResponseEntity<?> getAllCategories() {
+        return new ResponseEntity<>(categoryService.getAllCategories(), HttpStatus.OK);
     }
-
-
-
     @GetMapping("/{id}")
     public ResponseEntity<?> getCategoryById(@PathVariable("id") Long id) {
         try {
@@ -59,23 +54,15 @@ public class CategoryManagement{
     public ResponseEntity<?> updateCategory(@PathVariable("id") Long id, @RequestBody Category category) {
         try {
         	System.out.println("updateCategory: " + category);
-        	Category existingCategory = categoryService.getCategoryById(id);
-//        	if(existingCategory.getUrlCategory() != null && category.getUrlCategory() != null && existingCategory.getUrlCategory() == (category.getUrlCategory())) {
-        	
+        	categoryService.getCategoryById(id);        	
         	category.setId(id);
-        	System.out.println("existingCategory: " + existingCategory);
             Category updatedCategory = categoryService.updateCategory(category);
             return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
         } catch (NoSuchElementException e) {
-//            ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), 404);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (Exception e) {
-        	
+        } catch (Exception e) {        	
         	e.printStackTrace();	
-//            ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), 500);
-//          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        	
+          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());      
         }
     }
 

@@ -10,4 +10,5 @@ import com.euroaluAPI.models.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long>, JpaSpecificationExecutor<Category> {
 	
+	
 }

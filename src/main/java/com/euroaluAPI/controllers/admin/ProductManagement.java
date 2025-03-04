@@ -28,7 +28,7 @@ public class ProductManagement{
  
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAllCategories() {
+    public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> products = productService.getAllCategories();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
@@ -58,22 +58,15 @@ public class ProductManagement{
     @PutMapping("/{id}")
     public ResponseEntity<?> updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
         try {
-        	System.out.println("updateProduct: " + product);
-        	Product existingProduct = productService.getProductById(id);
-//        	if(existingProduct.getUrlProduct() != null && product.getUrlProduct() != null && existingProduct.getUrlProduct() == (product.getUrlProduct())) {
-        	
+        	Product existingProduct = productService.getProductById(id);        	
         	product.setId(id);
-        	System.out.println("existingProduct: " + existingProduct);
             Product updatedProduct = productService.updateProduct(product);
             return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
         } catch (NoSuchElementException e) {
-//            ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), 404);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
         	
         	e.printStackTrace();	
-//            ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), 500);
-//          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         	
         }

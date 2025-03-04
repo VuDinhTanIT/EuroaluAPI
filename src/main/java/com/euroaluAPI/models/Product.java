@@ -1,10 +1,5 @@
 package com.euroaluAPI.models;
 
-import java.sql.Timestamp;
-import java.util.Set;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -37,18 +32,14 @@ public class Product {
 	@JoinColumn(name = "categoy_id")
 	private Category category;	
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "sub_categoy_id", nullable = true)
-	private SubCategory subCategory;
+	private int productType;
+	
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "sub_categoy_id", nullable = true)
+//	private SubCategory subCategory;
 	private double price;
 	private String image;
-	@CreationTimestamp
-	@Column(name = "create_time", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable = false, nullable = false)
-	private Timestamp createTime;
 
-	@UpdateTimestamp
-	@Column(name = "update_time", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP", updatable = true, nullable = false)
-	private Timestamp updateTime;
 
 	@Column(columnDefinition = "tinyInt(1)")
 	private boolean status;

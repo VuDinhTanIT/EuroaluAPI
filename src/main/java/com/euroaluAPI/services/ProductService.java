@@ -22,9 +22,6 @@ public class ProductService {
 	        return productRepository.findById(id)
 	                .orElseThrow(() -> new NoSuchElementException("Product not found: " + id));
 	    }
-//	    public Product getEvnetByIdStr(String id) {
-//	    	return getProductById(Long.parseInt(id));
-//	    }
 
 	    public Product createProduct(Product product) {
 	        return productRepository.save(product);
@@ -33,7 +30,6 @@ public class ProductService {
 	    public Product updateProduct(Product product) {
 	        return productRepository.save(product);
 	    }
-
 	    public void deleteProduct(Long id) {
 	        productRepository.deleteById(id);
 	    }
