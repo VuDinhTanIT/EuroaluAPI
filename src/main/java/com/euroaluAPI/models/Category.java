@@ -36,7 +36,7 @@ public class Category {
 
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "parent_id")
+	@JoinColumn(name = "parent_id", nullable = true)
 	private Category parentId;
 
 	@CreationTimestamp
@@ -48,6 +48,6 @@ public class Category {
 	private Timestamp updateTime;
 
 	@Column(columnDefinition = "tinyInt(1)")
-	private boolean status;
+	private boolean status = true;
 
 }

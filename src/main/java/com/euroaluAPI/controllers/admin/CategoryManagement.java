@@ -1,6 +1,5 @@
 package com.euroaluAPI.controllers.admin;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.euroaluAPI.models.Category;
-import com.euroaluAPI.response.ApiResponse;
 import com.euroaluAPI.services.CategoryService;
 
 
