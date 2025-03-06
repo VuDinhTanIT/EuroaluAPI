@@ -33,18 +33,16 @@ public class ProductManagement{
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-
-
     @GetMapping("/{id}")
     public ResponseEntity<?> getProductById(@PathVariable("id") Long id) {
         try {
             Product product = productService.getProductById(id);
             return ResponseEntity.ok(product);
         } catch (NoSuchElementException e) {
-//            ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), 404);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(e.getMessage());
+        	e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
-//            ErrorResponse errorResponse = new ErrorResponse("An error occurred", 500);
+        	e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
@@ -58,10 +56,11 @@ public class ProductManagement{
     @PutMapping("/{id}")
     public ResponseEntity<?> updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
         try {
-        	Product existingProduct = productService.getProductById(id);        	
+        	productService.getProductById(id);        	
         	product.setId(id);
-            Product updatedProduct = productService.updateProduct(product);
-            return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
+            productService.updateProduct(product);
+            System.out.println("ok " + product);
+            return new ResponseEntity<>(true, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
