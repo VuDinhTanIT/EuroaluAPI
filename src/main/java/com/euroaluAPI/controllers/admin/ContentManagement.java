@@ -64,7 +64,7 @@ public class ContentManagement{
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateContent(@PathVariable("id") Long id, @RequestBody Content content) {
+    public ResponseEntity<?> updateContent(@PathVariable("id") Long id, @RequestBody  Content content) {
         try {
         	contentService.getContentById(id);        	
         	content.setId(id);

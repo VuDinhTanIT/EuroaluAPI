@@ -26,6 +26,7 @@ public class Content {
     private String title; // Tiêu đề phần mở đầu
 
     //Có thể tìm kiểm theo href thẻ a
+    @Column(unique = true)
     private String path;
     @Column(columnDefinition = "text")
     private String content; // Nội dung
