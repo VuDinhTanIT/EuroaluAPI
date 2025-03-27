@@ -21,7 +21,7 @@ import com.euroaluAPI.services.ContentService;
 
 @RestController
 @RequestMapping("api/admin/noi-dung")
-public class ContentManagement{
+public class ContentManagementAPI{
 
     @Autowired
     private ContentService contentService;

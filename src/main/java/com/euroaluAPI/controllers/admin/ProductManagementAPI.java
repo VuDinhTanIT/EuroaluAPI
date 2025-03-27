@@ -21,7 +21,7 @@ import com.euroaluAPI.services.ProductService;
 
 @RestController
 @RequestMapping("api/admin/products")
-public class ProductManagement{
+public class ProductManagementAPI{
 
     @Autowired
     private ProductService productService;
@@ -29,7 +29,7 @@ public class ProductManagement{
 
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> products = productService.getAllCategories();
+        List<Product> products = productService.getAllProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 

@@ -1,67 +1,42 @@
 package com.euroaluAPI.exceptions;
 
-
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.NoHandlerFoundException;
-
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @ControllerAdvice
-@Slf4j
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(HttpClientErrorException.class)
+    public String handleHttpClientError(HttpClientErrorException e, Model model) {
+        String errorMessage;
+        e.printStackTrace();
+        if (e.getStatusCode() == HttpStatus.BAD_REQUEST) {
+        	
+            errorMessage = "Bad Request: " + e.getResponseBodyAsString();
+        } else if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
+            errorMessage = "Not Found: " + e.getResponseBodyAsString();
+        } else {
+            errorMessage = "Unexpected error: " + e.getLocalizedMessage();
+        }
 
-	@ExceptionHandler(value = MethodArgumentNotValidException.class)
-	ResponseEntity<?> handlingValidation(MethodArgumentNotValidException exception) {
-		String enumKey = exception.getFieldError().getDefaultMessage();
-		;
+        model.addAttribute("errorMessage", errorMessage);
+        return "error"; // Tên view (HTML) bạn muốn trả về
+    }
+    @ExceptionHandler(NoResourceFoundException.class)
+    public void handleNoResourceFound(NoResourceFoundException e) {
+        System.err.println("Lỗi NoResourceFoundException: " + e.getMessage());
 
-		return ResponseEntity.badRequest().body(enumKey);
-	}
-
-	@ExceptionHandler(value = Exception.class)
-	ResponseEntity<?> handlingRuntimeException(Exception exception) {
-		log.error("Exception: ", exception);
-
-		return ResponseEntity.badRequest().body(exception.getMessage());
-	}
-//	@ExceptionHandler(value = AppException.class)
-//	ResponseEntity<ApiResponse> handlingAppException(AppException exception) {
-//		ErrorCode errorCode = exception.getErrorCode();
-//		ApiResponse apiResponse = new ApiResponse();
-//
-//		apiResponse.setCode(errorCode.getCode());
-//		apiResponse.setMessage(exception.getMessage());
-//		log.info("Global AppException  ");
-//		return ResponseEntity.status(errorCode.getStatusCode()).body(apiResponse);
-//	}
-
-	@ExceptionHandler(value = AccessDeniedException.class)
-	ResponseEntity<?> handlingAccessDeniedException(AccessDeniedException exception) {
-		log.info("GlobalExceptionclass được bắt lỗi: ");
-		exception.printStackTrace();
-		return ResponseEntity.status(401).body(exception);
-	}
-
-	// Xử lý lỗi 404 (NoHandlerFoundException)
-	@ExceptionHandler(NoHandlerFoundException.class)
-	public ResponseEntity<?> handleNoHandlerFoundException(NoHandlerFoundException ex) {
-//        logger.error("Requested URL not found: {}", ex.getRequestURL());
-//    	ErrorCode errorCode = ex.getErrorCode();
-
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex);
-	}
-	
-	@ExceptionHandler(value = RuntimeException.class)
-	ResponseEntity<?> handlingAccessDeniedException(RuntimeException exception) {
-		log.info("GlobalExceptionclass được bắt lỗi RntimeEX");
-		exception.getCause();
-		return ResponseEntity.status(401).body(exception.getLocalizedMessage());
-	}
-
+    }
+    @ExceptionHandler(Exception.class)
+    public String handleHttpClientError(Exception e, Model model) {
+    	e.getCause();
+    	System.err.println("lỗi " );
+    	e.printStackTrace();
+        model.addAttribute("errorMessage", e.getLocalizedMessage());
+        return "error"; // Tên view (HTML) bạn muốn trả về
+    }
 }

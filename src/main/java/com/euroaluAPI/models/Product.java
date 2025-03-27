@@ -1,6 +1,5 @@
 package com.euroaluAPI.models;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -30,19 +29,13 @@ public class Product {
 	private String description;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "categoy_id")
-	private Category category;	
-	
-	private int productType;
-	
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "sub_categoy_id", nullable = true)
-//	private SubCategory subCategory;
+	private Category category;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "product_type_id")
+	private ProductType productType;
 	private double price;
 	private String image;
 
-
 	@Column(columnDefinition = "tinyInt(1)")
-	private boolean status;
-
-	// Getters, setters, constructors
+	private boolean status = true;
 }

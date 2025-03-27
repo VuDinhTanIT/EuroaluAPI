@@ -20,7 +20,7 @@ import com.euroaluAPI.services.CategoryService;
 
 @RestController
 @RequestMapping("api/admin/categories")
-public class CategoryManagement{
+public class CategoryManagementAPI{
 
     @Autowired
     private CategoryService categoryService;

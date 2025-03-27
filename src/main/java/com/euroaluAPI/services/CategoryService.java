@@ -19,7 +19,7 @@ public class CategoryService {
 //	        ApiResponse<List<Category>> response = new ApiResponse<List<Category>>(200 ,"OK", categoryRepository.findAll());
 //	    	return  response;
 //	    }
-	public Object getAllCategories() {
+	public List<Category> getAllCategories() {
 		return categoryRepository.findAll();
 	}
 

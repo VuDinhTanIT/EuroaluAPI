@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<title>Hình ảnh công ty</title>
+	<!--	
+		<script th:src="@{/web/js/jquery-3.6.0.min.js}" ></script>
+			<script th:src="@{/web/js/slider/slick-1.8.1.min.js}" ></script>
+-->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+	<!--	
+-->
+
+	<style>
+		.slick-slider {
+			width: 100%;
+			margin: auto;
+		}
+
+		.slick-slide img {
+			height: 500px;
+			object-fit: cover;
+			width: 100%;
+			/* Đảm bảo ảnh chiếm toàn bộ chiều rộng */
+		}
+
+		.slider2 img {
+			width: 100%;
+			height: 400px;
+		}
+
+		.slick-arrow {
+			background-color: rgba(255, 255, 255, 0.8);
+			/* Nền cho nút */
+			border: none;
+			width: 40px;
+			/* Chiều rộng của nút */
+			height: 40px;
+			/* Chiều cao của nút */
+			border-radius: 50%;
+			/* Làm tròn nút */
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			z-index: 1;
+			/* Đảm bảo nút nằm trên ảnh */
+		}
+
+		.slick-prev {
+			left: 30px;
+			/* Khoảng cách từ bên trái */
+		}
+
+		.slick-next {
+			right: 50px;
+			/* Khoảng cách từ bên phải */
+		}
+	</style>
+</head>
+
+<body>
+
+
+	<main th:fragment="content" class="container mx-auto px-4 md:px-24">
+		<section class="mt-10 mb-5 flex text-white md:mt-16">
+			<div class="flex w-full rounded bg-[#0060af] p-2"><small
+					class=" ml-2 text-sm font-semibold uppercase md:text-base">Hình ảnh công ty</small></div>
+		</section>
+		<div class="text-lg">
+			<div class="grid grid-cols-1 gap-0 md:grid-cols-4 md:gap-2">
+				<div th:each="hinhAnh : ${hinhAnhCtys}"
+					class="relative mx-2 h-full cursor-pointer transition-all hover:scale-105">
+					<img th:if="${hinhAnh.image}" 
+						th:src="${hinhAnh.image.contains('http')} ? ${hinhAnh.image} : ${'/uploads/' + hinhAnh.image}"
+						alt="" class="h-full w-full object-cover">
+					<div class="absolute bottom-0 w-full bg-gray-800 p-2 text-center text-white opacity-80">
+						<span th:if="${hinhAnh.description}"  th:text="${hinhAnh.description }">This is an Image</span>
+					</div>
+				</div>
+				<div class="relative mx-2 h-full cursor-pointer transition-all hover:scale-105"><img
+						src="https://images.unsplash.com/photo-1462396240927-52058a6a84ec?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=773&amp;q=80"
+						alt="" class="h-full w-full object-cover">
+					<div class="absolute bottom-0 w-full bg-gray-800 p-2 text-center text-white opacity-80">This is an
+						Image</div>
+				</div>
+				<div class="relative mx-2 h-full cursor-pointer transition-all hover:scale-105"><img
+						src="https://images.unsplash.com/photo-1462396240927-52058a6a84ec?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=773&amp;q=80"
+						alt="" class="h-full w-full object-cover">
+					<div class="absolute bottom-0 w-full bg-gray-800 p-2 text-center text-white opacity-80">This is an
+						Image</div>
+				</div>
+				<div class="relative mx-2 h-full cursor-pointer transition-all hover:scale-105"><img
+						src="https://images.unsplash.com/photo-1462396240927-52058a6a84ec?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=773&amp;q=80"
+						alt="" class="h-full w-full object-cover">
+					<div class="absolute bottom-0 w-full bg-gray-800 p-2 text-center text-white opacity-80">This is an
+						Image</div>
+				</div>
+				<div class="relative mx-2 h-full cursor-pointer transition-all hover:scale-105"><img
+						src="https://images.unsplash.com/photo-1462396240927-52058a6a84ec?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=773&amp;q=80"
+						alt="" class="h-full w-full object-cover">
+					<div class="absolute bottom-0 w-full bg-gray-800 p-2 text-center text-white opacity-80">This is an
+						Image</div>
+				</div>
+				<div class="relative mx-2 h-full cursor-pointer transition-all hover:scale-105"><img
+						src="https://images.unsplash.com/photo-1462396240927-52058a6a84ec?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=773&amp;q=80"
+						alt="" class="h-full w-full object-cover">
+					<div class="absolute bottom-0 w-full bg-gray-800 p-2 text-center text-white opacity-80">This is an
+						Image</div>
+				</div>
+				<div class="relative mx-2 h-full cursor-pointer transition-all hover:scale-105"><img
+						src="https://images.unsplash.com/photo-1462396240927-52058a6a84ec?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=773&amp;q=80"
+						alt="" class="h-full w-full object-cover">
+					<div class="absolute bottom-0 w-full bg-gray-800 p-2 text-center text-white opacity-80">This is an
+						Image</div>
+				</div>
+				<div class="relative mx-2 h-full cursor-pointer transition-all hover:scale-105"><img
+						src="https://images.unsplash.com/photo-1462396240927-52058a6a84ec?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=773&amp;q=80"
+						alt="" class="h-full w-full object-cover">
+					<div class="absolute bottom-0 w-full bg-gray-800 p-2 text-center text-white opacity-80">This is an
+						Image</div>
+				</div>
+				<div class="relative mx-2 h-full cursor-pointer transition-all hover:scale-105"><img
+						src="https://images.unsplash.com/photo-1462396240927-52058a6a84ec?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=773&amp;q=80"
+						alt="" class="h-full w-full object-cover">
+					<div class="absolute bottom-0 w-full bg-gray-800 p-2 text-center text-white opacity-80">This is an
+						Image</div>
+				</div>
+			</div>
+		</div>
+
+	</main>
+	<!--Thoong tin lien he-->
+
+
+	<div th:replace="~{user/common/footer :: footer}"></div>
+
+</body>
+
+</html>
